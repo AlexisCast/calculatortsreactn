@@ -5,8 +5,15 @@ import {styles} from '../theme/appThem';
 
 export const CalculatorScreen = () => {
   return (
-    <View>
-      <Text style={styles.text}>Calc</Text>
+    <View style={styles.calculatorContainer}>
+      <Text style={styles.smallResult}>1,500</Text>
+      <Text style={styles.result}>1,500</Text>
+
+      <View>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>1</Text>
+        </View>
+      </View>
     </View>
   );
 };
