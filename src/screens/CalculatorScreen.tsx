@@ -9,11 +9,42 @@ export const CalculatorScreen = () => {
   const [number, setNumber] = useState('0');
 
   const createNumber = (numberText: string) => {
-    setNumber(number + numberText);
+    //no double dot
+    if (number.includes('.') && numberText === '.') {
+      return;
+    }
+
+    if (number.startsWith('0') || number.startsWith('-0')) {
+      //decimal dot
+      if (numberText === '.') {
+        setNumber(number + numberText);
+        //evaluate if its a zero, and thre is a dot
+      } else if (numberText === '0' && number.includes('.')) {
+        setNumber(number + numberText);
+        //evaluate if it is different from zero and it does not have a dot
+      } else if (numberText !== '0' && !number.includes('.')) {
+        setNumber(numberText);
+        //avoid 000.0
+      } else if (numberText === '0' && !number.includes('.')) {
+        setNumber(number);
+      } else {
+        setNumber(number + numberText);
+      }
+    } else {
+      setNumber(number + numberText);
+    }
   };
 
   const clean = () => {
     setNumber('0');
+  };
+
+  const negativePosition = () => {
+    if (number.includes('-')) {
+      setNumber(number.replace('-', ''));
+    } else {
+      setNumber('-' + number);
+    }
   };
 
   return (
@@ -25,7 +56,7 @@ export const CalculatorScreen = () => {
 
       <View style={styles.row}>
         <ButtonCalc text="C" color="#9b9b9b" action={clean} />
-        <ButtonCalc text="+/-" color="#9b9b9b" action={clean} />
+        <ButtonCalc text="+/-" color="#9b9b9b" action={negativePosition} />
         <ButtonCalc text="del" color="#9b9b9b" action={clean} />
         <ButtonCalc text="/" color="#ff9427" action={clean} />
       </View>
@@ -53,7 +84,7 @@ export const CalculatorScreen = () => {
 
       <View style={styles.row}>
         <ButtonCalc text="0" wide action={createNumber} />
-        <ButtonCalc text="." action={clean} />
+        <ButtonCalc text="." action={createNumber} />
         <ButtonCalc text="=" color="#ff9427" action={clean} />
       </View>
     </View>
