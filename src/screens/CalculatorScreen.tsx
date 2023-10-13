@@ -47,6 +47,20 @@ export const CalculatorScreen = () => {
     }
   };
 
+  const deleteButton = () => {
+    let negative = '';
+    let numberTemp = number;
+    if (number.includes('-')) {
+      negative = '-';
+      numberTemp = number.substring(1);
+    }
+    if (numberTemp.length > 1) {
+      setNumber(negative + number.slice(0, -1));
+    } else {
+      setNumber('0');
+    }
+  };
+
   return (
     <View style={styles.calculatorContainer}>
       <Text style={styles.smallResult}>{numberBefore}</Text>
@@ -57,7 +71,7 @@ export const CalculatorScreen = () => {
       <View style={styles.row}>
         <ButtonCalc text="C" color="#9b9b9b" action={clean} />
         <ButtonCalc text="+/-" color="#9b9b9b" action={negativePosition} />
-        <ButtonCalc text="del" color="#9b9b9b" action={clean} />
+        <ButtonCalc text="del" color="#9b9b9b" action={deleteButton} />
         <ButtonCalc text="/" color="#ff9427" action={clean} />
       </View>
 
